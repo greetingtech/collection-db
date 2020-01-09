@@ -10,7 +10,8 @@ import java.io.*;
  */
 public class CopyUtils {
 
-    static Object copy(Object oldOne) {
+    @SuppressWarnings("unchecked")
+    static <T> T copy(T oldOne) {
         try {
             byte[] bytes;
             try (ByteArrayOutputStream byteOut = new ByteArrayOutputStream()) {
@@ -22,7 +23,7 @@ public class CopyUtils {
             try (ByteArrayInputStream byteIn = new ByteArrayInputStream(bytes)) {
                 try (ObjectInputStream oIn = new ObjectInputStream(byteIn)) {
                     Object newOne = oIn.readObject();
-                    return newOne;
+                    return (T) newOne;
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
